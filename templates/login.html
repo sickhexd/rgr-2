@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{# номер лабораторной работы: #}
+{% block lab %}Расчетно-графическая работа{% endblock %}
+
+{% block main %}
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+
+    <div class="form-container">
+        <form method="POST" class="styled-form">
+            <input type="text" name="login" placeholder="Логин" required>
+            <input type="password" name="password" placeholder="Пароль" required>
+            <button type="submit" class="btn">Войти</button>
+        </form>
+    </div>
+{% endblock %}

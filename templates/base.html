@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Антонов Семен. {% block lab %}{% endblock %} </title>
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename = 'favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename = 'favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename = 'favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <style>
+        body {
+            {% if color or background_color or font_size or font_weight %}
+            color: {{ color or '#000000' }};
+            background-color: {{ background_color or '#ffffff' }};
+            font-size: {{ font_size or '16' }}px;
+            font-weight: {{ font_weight or 'normal' }};
+            {% endif %}
+        }
+    </style>
+    {% block script %}{% endblock %}
+    
+</head>
+<body>
+    <header>
+        WEB-программирование, часть 2.
+    </header>
+    <main>
+        {% block main %}
+            
+        {% endblock %}
+    </main>
+    
+    <footer>
+        &copy; Антонов Семен, ФБИ-21, 3 курс, 2024
+    </footer>
+</body>
+</html>

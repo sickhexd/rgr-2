@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{# номер лабораторной работы: #}
+{% block lab %}Расчетно-графическая работа{% endblock %}
+
+{% block main %}
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+
+    <div class="vacation-container">
+        <h1>Планирование отпуска на {{ year }}</h1>
+        <form method="GET" class="year-form">
+            <label for="year">Выберите год:</label>
+            <input type="number" name="year" id="year" value="{{ year }}" class="year-input">
+            <button type="submit" class="btn">Перейти</button>
+            
+        </form>
+        {% if year < now.year %}
+            <p class="info-text">Изменения в прошлом невозможны. Вы можете только просматривать.</p>
+        {% endif %}
+
+        <form method="POST" class="vacation-form">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Номер недели</th>
+                        <th>Начало недели</th>
+                        <th>Конец недели</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for week in weeks %}
+                        <tr>
+                            <td>{{ week.week_number }}</td>
+                            <td>{{ week.start_date }}</td>
+                            <td>{{ week.end_date }}</td>
+                            <td>
+                                {% if week.occupied %}
+                                    {% if week.occupied == session.user_id %}
+                                        <span class="occupied">Ваш отпуск</span>
+                                        <button type="submit" name="unmark" value="{{ week.week_number }}" class="btn">Отменить</button>
+                                    {% else %}
+                                        <span class="occupied">Занято ({{ week.username }})</span>
+                                    {% endif %}
+                                {% elif year >= now.year and session.user_id %}
+                                    <span class="free">Свободно</span>
+                                    <input type="checkbox" name="weeks" value="{{ week.week_number }}">
+                                {% else %}
+                                    <span class="free">Свободно</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if year >= now.year and session.user_id %}
+                <button type="submit" class="btn">Сохранить</button>
+            {% endif %}
+        </form>
+
+        
+    </div>
+{% endblock %}
